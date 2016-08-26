@@ -1,13 +1,13 @@
-package com.taotao.rxretromvpdemo.Presenter;
+package com.taotao.rxretromvpdemo.presenter;
 
 import android.os.Handler;
+import android.widget.Toast;
 
-import com.taotao.rxretromvpdemo.Bean.UserInfo;
-import com.taotao.rxretromvpdemo.Model.IUserLoginModel;
-import com.taotao.rxretromvpdemo.Model.UserLoginModel;
-import com.taotao.rxretromvpdemo.Model.onLoginListener;
-import com.taotao.rxretromvpdemo.VIew.IUserView;
-
+import com.taotao.rxretromvpdemo.MyApplication;
+import com.taotao.rxretromvpdemo.bean.UserInfo;
+import com.taotao.rxretromvpdemo.model.IUserLoginModel;
+import com.taotao.rxretromvpdemo.model.UserLoginModel;
+import com.taotao.rxretromvpdemo.view.IUserView;
 /**
  * Created by w.pitt on 2016/8/22.
  */
@@ -23,27 +23,25 @@ public class UserLoginPresenter {
 
     public void login() {
         mUserView.showLoading();
-        mUserLoginModel.login(mUserView.getUserName(), mUserView.getPassword(), new onLoginListener() {
+        mUserLoginModel.login(mUserView.getUserName(), mUserView.getPassword(), new OnNetRequestListener<UserInfo>() {
             @Override
-            public void loginSuccess(final UserInfo user) {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mUserView.hideLoading();
-                        mUserView.toMainAct(user);
-                    }
-                });
+            public void onStart() {
+                mUserView.showLoading();
             }
 
             @Override
-            public void loginFailed() {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mUserView.hideLoading();
-                        mUserView.errorLogin();
-                    }
-                });
+            public void onFinish() {
+                mUserView.hideLoading();
+            }
+
+            @Override
+            public void onSuccess(UserInfo data) {
+                mUserView.toMainAct(data);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(MyApplication.getContext(), "fail", Toast.LENGTH_SHORT).show();
             }
         });
     }

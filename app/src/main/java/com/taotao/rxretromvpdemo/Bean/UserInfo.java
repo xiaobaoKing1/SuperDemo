@@ -1,4 +1,4 @@
-package com.taotao.rxretromvpdemo.Bean;
+package com.taotao.rxretromvpdemo.bean;
 
 import java.io.Serializable;
 import java.util.List;

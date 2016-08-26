@@ -1,6 +1,6 @@
-package com.taotao.rxretromvpdemo.Model;
+package com.taotao.rxretromvpdemo.model;
 
-import com.taotao.rxretromvpdemo.Bean.UserInfo;
+import com.taotao.rxretromvpdemo.bean.UserInfo;
 /**
  * Created by w.pitt on 2016/8/22.
  */
